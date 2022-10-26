@@ -12,7 +12,7 @@ def cleanUp(inputString):
     for i in inputString:
         for j in i:
             final.append(j)
-
+    print(final)
     return final
 def getStations(name):
     query = "SELECT stations.name FROM stationsLine LEFT JOIN stations ON stationsLine.stationId=stations.id WHERE lineName=%s ORDER BY stationsLine.pos"
@@ -44,7 +44,7 @@ def askForStation():
         else:
             lines = getLines(station)
             if lines == None:
-                print("Line you have entered are not valid.")
+                print("Station you have entered are not valid.")
 
 def askForInput():
     while True:

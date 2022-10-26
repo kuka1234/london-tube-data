@@ -44,8 +44,14 @@ def makeStationsToLineTable(data):
     query = "INSERT INTO stationsLine VALUES(%s, %s, %s);"
     mycursor.execute(query, (stationId,lineName,pos))
     mydb.commit()
-# loadStations(data)
-# makeStationsToLineTable(data)
+loadStations(data)
+makeStationsToLineTable(data)
 
 f.close()
 mycursor.execute("SELECT * FROM stations")
+
+# TO create tables:
+# CREATE TABLE stations (id INT NOT NULL, name VARCHAR(255), longitude FLOAT, latitude FLOAT)
+#CREATE TABLE stationsLine (stationId INT NOT NULL, lineName VARCHAR(255) NOT NULL, pos INT NOT NULL)
+# ALTER TABLE stationsLine CHANGE stationId stationId VARCHAR(512)
+# ALTER TABLE stationsLine CHANGE stationsId stationsId VARCHAR(512)
