@@ -1,4 +1,24 @@
+import mysql.connector
+mydb = mysql.connector.connect(
+  host="localhost",
+  user="root",
+  password="test",
+  database="londonTube"
+)
+mycursor = mydb.cursor()
 
+def getStations(name):
+    query = "SELECT stations.name FROM stationsLine LEFT JOIN stations ON stationsLine.stationId=stations.id WHERE lineName=%s"
+    mycursor.execute(query, [name])
+    res = mycursor.fetchall()
+    print(res)
+
+def getLines(name):
+    query = "SELECT stationsLine.lineName FROM stationsLine LEFT JOIN stations ON stationsLine.stationId=stations.id WHERE name=%s"
+    mycursor.execute(query, [name])
+    res = mycursor.fetchall()
+    print(res)
+getLines("Victoria")
 def askForLine():
     while True:
         line = input("Please enter the line or type back to go back: ")
@@ -29,4 +49,4 @@ def askForInput():
         else:
             "Input not valid."
 
-askForInput()
+# askForInput()
