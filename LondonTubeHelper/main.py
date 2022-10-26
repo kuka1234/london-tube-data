@@ -7,18 +7,25 @@ mydb = mysql.connector.connect(
 )
 mycursor = mydb.cursor()
 
-def getStations(name):
-    query = "SELECT stations.name FROM stationsLine LEFT JOIN stations ON stationsLine.stationId=stations.id WHERE lineName=%s"
-    mycursor.execute(query, [name])
-    res = mycursor.fetchall()
-    print(res)
+def cleanUp(inputString):
+    final = []
+    for i in inputString:
+        for j in i:
+            final.append(j)
 
+    return final
+def getStations(name):
+    query = "SELECT stations.name FROM stationsLine LEFT JOIN stations ON stationsLine.stationId=stations.id WHERE lineName=%s ORDER BY stationsLine.pos"
+    mycursor.execute(query, [name])
+    res = cleanUp(mycursor.fetchall())
+
+    return res
 def getLines(name):
     query = "SELECT stationsLine.lineName FROM stationsLine LEFT JOIN stations ON stationsLine.stationId=stations.id WHERE name=%s"
     mycursor.execute(query, [name])
-    res = mycursor.fetchall()
-    print(res)
-getLines("Victoria")
+    res = cleanUp(mycursor.fetchall())
+    return res
+
 def askForLine():
     while True:
         line = input("Please enter the line or type back to go back: ")
@@ -35,7 +42,7 @@ def askForStation():
         if station == "back":
             return
         else:
-            lines = getLine(station)
+            lines = getLines(station)
             if lines == None:
                 print("Line you have entered are not valid.")
 
@@ -48,5 +55,4 @@ def askForInput():
             askForStation()
         else:
             "Input not valid."
-
-# askForInput()
+askForInput()
